@@ -1,0 +1,11 @@
+task A {
+  gradle clean
+}
+
+task B(dependsOn: A) {
+    gradle --refresh-dependencies
+}
+
+task C(dependsOn: [A, B]) {
+    gradle eclipse
+}

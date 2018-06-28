@@ -1,0 +1,42 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.0.BUILD-SNAPSHOT'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.pendo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+
+dependencies {
+	compile group: 'com.fasterxml', name: 'jackson-xml-databind', version: '0.6.2'
+	compile group: 'org.glassfish.jersey.media', name: 'jersey-media-moxy', version: '2.27'
+	compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.27'
+	compile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.27'
+	
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.3.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.0.3.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.0.3.RELEASE'
+	compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
