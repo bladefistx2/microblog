@@ -9,5 +9,5 @@ import com.pendo.microblog.model.Post;
 public interface PostRepository extends ElasticsearchRepository<Post, String> {
 
     Optional<Post> findById(String id);
-
+    
 }

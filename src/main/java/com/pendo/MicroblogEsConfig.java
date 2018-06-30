@@ -26,6 +26,10 @@ public class MicroblogEsConfig {
     @Value("${elasticsearch.clustername}")
     private String EsClusterName;
 
+    public String getEsHost() {
+    	return EsHost;
+    }
+    
     @Bean
     public Client client() throws Exception {
     	
@@ -42,6 +46,7 @@ public class MicroblogEsConfig {
     public ElasticsearchOperations elasticsearchTemplate() throws Exception {
         return new ElasticsearchTemplate(client());
     }
+
 
     //Embedded Elasticsearch Server
 //    @Bean
