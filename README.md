@@ -51,11 +51,11 @@ Response:
 {
     "id": "601abace-b8e9-479c-9ea1-857fecab1636",
     "text": "one fish two fish blue fish red fish",
-    "rating": 4,
+    "rating": 2,
     "votes": {
         "1": 1,
         "2": 1,
-        "3": 1
+        "3": 0
     }
 }
 ```
