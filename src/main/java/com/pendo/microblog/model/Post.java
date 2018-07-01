@@ -87,4 +87,12 @@ public class Post {
 		this.votes = votes;
 	}
 
+	public Long getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Long creationDate) {
+		this.creationDate = creationDate;
+	}
+
 }

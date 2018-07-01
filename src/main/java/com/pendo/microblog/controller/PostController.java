@@ -1,7 +1,25 @@
 package com.pendo.microblog.controller;
 
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
+
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.sort.SortOrder;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,11 +28,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.pendo.EsClient;
+import com.pendo.microblog.Const;
 import com.pendo.microblog.model.Post;
 import com.pendo.microblog.service.PostService;
 
@@ -93,8 +115,59 @@ public class PostController {
 	@GetMapping("/post/top_posts")
 	@ResponseBody
 	public Object getTopPosts() {
-		// TODO: implement
-		return postService.findAll();
+		ArrayList<Map<String, Object>> results = new ArrayList<Map<String, Object>>();
+		
+		try {
+			Client client = EsClient.getClient();
+			
+			SearchRequestBuilder elastic = client.prepareSearch()
+					.setIndices(Const.INDEX_NAME)
+					.setTypes(Const.POST_DOCUMENT_NAME);
+			
+			MatchAllQueryBuilder matchQuery = QueryBuilders.matchAllQuery();
+			
+			elastic.setQuery(matchQuery);
+			
+			elastic.addSort(Const.RATING_FIELD, SortOrder.DESC);
+			
+			elastic.addSort(Const.CREATION_DATE_FIELD, SortOrder.ASC);
+			
+			//waitForClusterHealthYellow()
+			
+			// Execute the search
+			final SearchResponse searchResponse = elastic.execute().actionGet();
+			SearchHits searchHits = searchResponse.getHits();
+			Long totalHits = searchHits.getTotalHits();
+			
+			SearchHit currentHit;
+			
+			Iterator<SearchHit> hitsIt = searchHits.iterator();
+			while (hitsIt.hasNext()){
+				currentHit = hitsIt.next();
+				Map<String, Object> sourceAsMap = currentHit.getSourceAsMap();
+				if (sourceAsMap == null){
+					totalHits--;
+					continue;
+				}
+				sourceAsMap = modifyResults(sourceAsMap);
+				
+				// Add the result to the list
+				results.add(sourceAsMap);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body("Search is currently down. Please try again later, or contact support.");
+		}
+		
+		return results;
+	}
+
+	private Map<String, Object> modifyResults(Map<String, Object> sourceAsMap) {
+		Map<String, Object> res = sourceAsMap;
+		Long dateMili = (Long) res.remove(Const.CREATION_DATE_FIELD);
+		res.put(Const.CREATION_DATE_FIELD, new Date(dateMili));
+		return res;
 	}
 	
 }
