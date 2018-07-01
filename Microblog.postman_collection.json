@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "6a316ae1-d62e-4237-9cab-9e6de1c3648b",
+		"name": "Microblog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ES",
+			"description": null,
+			"item": [
+				{
+					"name": "DELETE index",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:9200/microblog",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"microblog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get default post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:9200/microblog/post/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"microblog",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "text",
+							"value": "meow says the cat",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/post/",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"post",
+						""
+					]
+				},
+				"description": "create new post"
+			},
+			"response": []
+		},
+		{
+			"name": "GET post",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/post/1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"post",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE post",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/post/1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"post",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET top_posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/post/top_posts",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"post",
+						"top_posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST downvote post ",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "userId",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/post/1/downvote",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"post",
+						"1",
+						"downvote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST upvote post ",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "userId",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/post/601abace-b8e9-479c-9ea1-857fecab1636/upvote",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"post",
+						"601abace-b8e9-479c-9ea1-857fecab1636",
+						"upvote"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
