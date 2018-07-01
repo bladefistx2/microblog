@@ -1,23 +1,27 @@
 # microblog
 
 This REST Spring service is configured to use Elasticsearch as a @Repository.
-In order to run the service, download and extract elasticsearch, (tested to work with ES 6.2.4) any version should work.
+
+In order to run the service, download and extract elasticsearch
+Tested to work with ES 6.2.4, but any version should work.
+
+Use postman collection file to test and use the functionality.
 
 Endpoints supported:
 
-GET /post
+*GET /post*
 
-POST /post/
+*POST /post/*
 
-PATCH /post/{id}
+*PATCH /post/{id}*
 
-DELETE /post/{id}
+*DELETE /post/{id}*
 
-POST /post/{id}/upvote
+*POST /post/{id}/upvote*
 
-POST /post/{id}/downvote
+*POST /post/{id}/downvote*
 
-GET /post/top_posts
+*GET /post/top_posts*
 
 example usage:
 
