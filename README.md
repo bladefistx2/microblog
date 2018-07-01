@@ -24,8 +24,9 @@ Endpoints supported:
 *GET /post/top_posts*
 
 example usage:
-```
+
 1. Create a new post:
+```
 POST /post/
 {
 	"text": "one fish two fish blue fish red fish"
