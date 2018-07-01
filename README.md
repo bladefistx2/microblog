@@ -1,4 +1,4 @@
-# microblog
+# Microblog:
 
 This REST Spring service is configured to use Elasticsearch as a @Repository.
 
@@ -24,7 +24,7 @@ Endpoints supported:
 *GET /post/top_posts*
 
 example usage:
-
+```
 1. Create a new post:
 POST /post/
 {
@@ -38,9 +38,9 @@ Response
     "rating": 0,
     "votes": {}
 }
-
+```
 2. upvote a post:
-
+```
 POST /post/601abace-b8e9-479c-9ea1-857fecab1636/upvote
 {
 	"userId": "1"
@@ -57,3 +57,4 @@ Response:
         "3": 1
     }
 }
+```
